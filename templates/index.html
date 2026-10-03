@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <meta
+        name="description"
+        content="VEYRA — an intelligent layer between you and your inbox."
+    >
+    <title>VEYRA — Your attention, not your inbox</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+<div id="onboarding" class="onboarding">
+    <div class="onboarding-glow"></div>
+
+    <div class="onboarding-card">
+        <div class="brand-mark large">V</div>
+
+        <div class="demo-pill">
+            <span></span>
+            Demo Mode
+        </div>
+
+        <p class="eyebrow">WELCOME TO VEYRA</p>
+
+        <h1>
+            Your inbox is full.
+            <span>Your attention shouldn't be.</span>
+        </h1>
+
+        <p class="onboarding-copy">
+            VEYRA turns a crowded inbox into a clear view of
+            what actually deserves your attention today.
+        </p>
+
+        <div class="onboarding-steps">
+            <div class="onboarding-step">
+                <div class="step-number">01</div>
+                <div>
+                    <strong>Bring emails together</strong>
+                    <p>One command center for your important messages.</p>
+                </div>
+            </div>
+
+            <div class="onboarding-step">
+                <div class="step-number">02</div>
+                <div>
+                    <strong>Let VEYRA identify what matters</strong>
+                    <p>Summaries, categories, priorities and action signals.</p>
+                </div>
+            </div>
+
+            <div class="onboarding-step">
+                <div class="step-number">03</div>
+                <div>
+                    <strong>Focus on what needs you</strong>
+                    <p>Start with deadlines and action items instead of noise.</p>
+                </div>
+            </div>
+        </div>
+
+        <button id="enterVeyra" class="primary-button full">
+            Enter VEYRA
+            <span>→</span>
+        </button>
+
+        <button id="skipOnboarding" class="text-button">
+            Skip introduction
+        </button>
+    </div>
+</div>
+
+
+<div id="app" class="app hidden">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+            <div class="brand">
+                <div class="brand-mark">V</div>
+                <div>
+                    <div class="brand-name">VEYRA</div>
+                    <div class="brand-subtitle">Email intelligence</div>
+                </div>
+            </div>
+
+            <button
+                id="closeMobileSidebar"
+                class="icon-button mobile-only"
+                aria-label="Close navigation"
+            >
+                ×
+            </button>
+        </div>
+
+        <div class="demo-banner">
+            <span class="status-dot"></span>
+            Demo Mode
+            <button id="demoInfo" aria-label="Demo mode information">?</button>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation">
+
+            <button class="nav-item active" data-view="dashboard">
+                <span class="nav-icon">⌂</span>
+                <span>Overview</span>
+            </button>
+
+            <button class="nav-item" data-view="today">
+                <span class="nav-icon">◎</span>
+                <span>Today</span>
+                <span id="todayBadge" class="nav-badge">4</span>
+            </button>
+
+            <button class="nav-item" data-view="inbox">
+                <span class="nav-icon">✉</span>
+                <span>Inbox</span>
+                <span id="inboxBadge" class="nav-badge muted">6</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-section">
+            <div class="sidebar-label">ACCOUNTS</div>
+
+            <button class="account-item">
+                <span class="account-avatar purple">P</span>
+                <span>
+                    <strong>Personal</strong>
+                    <small>charitha.personal</small>
+                </span>
+                <span class="account-count">4</span>
+            </button>
+
+            <button class="account-item">
+                <span class="account-avatar blue">C</span>
+                <span>
+                    <strong>College</strong>
+                    <small>charitha.college</small>
+                </span>
+                <span class="account-count">2</span>
+            </button>
+
+            <button class="account-item">
+                <span class="account-avatar green">W</span>
+                <span>
+                    <strong>Work</strong>
+                    <small>charitha.work</small>
+                </span>
+                <span class="account-count">2</span>
+            </button>
+        </div>
+
+        <div class="sidebar-section categories">
+            <div class="sidebar-label">CATEGORIES</div>
+
+            <button class="category-nav" data-filter="College">
+                <span class="category-dot college"></span>
+                College
+            </button>
+
+            <button class="category-nav" data-filter="Work">
+                <span class="category-dot work"></span>
+                Work
+            </button>
+
+            <button class="category-nav" data-filter="Personal">
+                <span class="category-dot personal"></span>
+                Personal
+            </button>
+
+            <button class="category-nav" data-filter="Finance">
+                <span class="category-dot finance"></span>
+                Finance
+            </button>
+
+            <button class="category-nav" data-filter="Promotions">
+                <span class="category-dot promotions"></span>
+                Promotions
+            </button>
+        </div>
+
+        <div class="sidebar-bottom">
+            <button class="sidebar-footer-button" id="securityInfo">
+                <span>⌾</span>
+                Privacy & security
+            </button>
+
+            <div class="profile-mini">
+                <div class="profile-avatar">CM</div>
+                <div>
+                    <strong>Charitha</strong>
+                    <small>Prototype workspace</small>
+                </div>
+                <span class="profile-menu">•••</span>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <button
+                id="openMobileSidebar"
+                class="icon-button mobile-only"
+                aria-label="Open navigation"
+            >
+                ☰
+            </button>
+
+            <div class="mobile-brand">VEYRA</div>
+
+            <div class="search-wrapper">
+                <span class="search-icon">⌕</span>
+                <input
+                    id="globalSearch"
+                    type="search"
+                    placeholder="Search emails, people, keywords..."
+                    aria-label="Search emails"
+                >
+                <span class="search-shortcut">/</span>
+            </div>
+
+            <div class="topbar-actions">
+                <button
+                    class="icon-button"
+                    id="notificationButton"
+                    aria-label="Notifications"
+                >
+                    ♧
+                </button>
+
+                <button
+                    class="icon-button"
+                    id="themeButton"
+                    aria-label="Toggle theme"
+                >
+                    ◐
+                </button>
+            </div>
+
+        </header>
+
+
+        <div class="content">
+
+            <section id="dashboardView" class="view active-view">
+
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">FRIDAY, OCTOBER 2, 2026</div>
+                        <h1>Good morning, Charitha.</h1>
+                        <p>Here's what deserves your attention today.</p>
+                    </div>
+
+                    <button class="secondary-button" id="refreshDashboard">
+                        <span>↻</span>
+                        Refresh
+                    </button>
+                </div>
+
+
+                <section class="attention-hero">
+
+                    <div class="attention-copy">
+                        <div class="attention-label">
+                            <span class="live-dot"></span>
+                            ATTENTION CENTER
+                        </div>
+
+                        <h2>
+                            You have
+                            <strong id="attentionCount">4</strong>
+                            emails that need your attention.
+                        </h2>
+
+                        <p>
+                            VEYRA filtered today's inbox so you can focus
+                            on the messages that actually need a response,
+                            decision or deadline.
+                        </p>
+
+                        <button
+                            class="light-button"
+                            data-view-target="today"
+                        >
+                            Open today's focus
+                            <span>→</span>
+                        </button>
+                    </div>
+
+                    <div class="attention-rings">
+                        <div class="ring ring-one">
+                            <span>
+                                <strong id="urgentCount">2</strong>
+                                <small>Urgent</small>
+                            </span>
+                        </div>
+
+                        <div class="ring ring-two">
+                            <span>
+                                <strong id="importantCount">2</strong>
+                                <small>Important</small>
+                            </span>
+                        </div>
+
+                        <div class="ring-center">
+                            <strong id="otherCount">8</strong>
+                            <small>everything<br>else</small>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon inbox-icon">✉</div>
+                        <div>
+                            <span>Total emails</span>
+                            <strong id="totalEmails">10</strong>
+                        </div>
+                        <small class="stat-change">Today</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon unread-icon">●</div>
+                        <div>
+                            <span>Unread</span>
+                            <strong id="unreadEmails">6</strong>
+                        </div>
+                        <small class="stat-change neutral">in inbox</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon important-icon">★</div>
+                        <div>
+                            <span>Important</span>
+                            <strong id="importantEmails">4</strong>
+                        </div>
+                        <small class="stat-change neutral">flagged</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon action-icon">✓</div>
+                        <div>
+                            <span>Needs action</span>
+                            <strong id="actionEmails">6</strong>
+                        </div>
+                        <small class="stat-change">focus first</small>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-columns">
+
+                    <section class="panel recent-panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <span class="eyebrow">INBOX SIGNAL</span>
+                                <h2>Recent emails</h2>
+                            </div>
+
+                            <button
+                                class="link-button"
+                                data-view-target="inbox"
+                            >
+                                View inbox →
+                            </button>
+                        </div>
+
+                        <div id="recentEmails" class="email-list compact"></div>
+
+                    </section>
+
+
+                    <section class="panel insight-panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <span class="eyebrow">PRODUCTIVITY</span>
+                                <h2>Inbox insight</h2>
+                            </div>
+                            <span class="spark-icon">✦</span>
+                        </div>
+
+                        <div class="insight-main">
+                            <div class="insight-number">21</div>
+                            <div>
+                                <strong>low-priority messages</strong>
+                                <p>can wait until later.</p>
+                            </div>
+                        </div>
+
+                        <div class="progress-track">
+                            <div class="progress-value"></div>
+                        </div>
+
+                        <p class="insight-text">
+                            Most of your unread messages today are
+                            promotional or informational. Start with the
+                            <strong>4 messages that require action</strong>
+                            and leave the rest for later.
+                        </p>
+
+                        <div class="insight-tags">
+                            <span>Less noise</span>
+                            <span>More focus</span>
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <section class="panel category-panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <span class="eyebrow">YOUR INBOX TODAY</span>
+                            <h2>Where your emails are coming from</h2>
+                        </div>
+                    </div>
+
+                    <div id="categoryBreakdown" class="category-breakdown"></div>
+
+                </section>
+
+            </section>
+
+
+            <section id="todayView" class="view">
+
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">YOUR FOCUS</div>
+                        <h1>Today</h1>
+                        <p>What deserves your attention before everything else.</p>
+                    </div>
+                </div>
+
+                <div class="today-summary">
+                    <div>
+                        <span class="attention-label">
+                            <span class="live-dot"></span>
+                            TODAY'S ATTENTION
+                        </span>
+                        <h2>Protect your attention.</h2>
+                        <p>
+                            VEYRA puts action items first and keeps everything
+                            else out of your way.
+                        </p>
+                    </div>
+
+                    <div class="today-summary-count">
+                        <strong id="todayActionCount">4</strong>
+                        <span>action items</span>
+                    </div>
+                </div>
+
+
+                <div class="today-section">
+                    <div class="section-heading">
+                        <h2>
+                            <span class="priority-symbol urgent">●</span>
+                            Needs your attention
+                        </h2>
+                        <span id="attentionSectionCount">4</span>
+                    </div>
+
+                    <div id="attentionEmails" class="attention-list"></div>
+                </div>
+
+
+                <div class="today-section">
+                    <div class="section-heading">
+                        <h2>
+                            <span class="priority-symbol normal">○</span>
+                            Read later
+                        </h2>
+                        <span id="laterSectionCount">3</span>
+                    </div>
+
+                    <div id="laterEmails" class="email-grid"></div>
+                </div>
+
+
+                <div class="today-section">
+                    <div class="section-heading">
+                        <h2>
+                            <span class="priority-symbol handled">✓</span>
+                            Already handled
+                        </h2>
+                        <span id="handledSectionCount">3</span>
+                    </div>
+
+                    <div id="handledEmails" class="email-grid"></div>
+                </div>
+
+            </section>
+
+
+            <section id="inboxView" class="view">
+
+                <div class="page-heading inbox-heading">
+                    <div>
+                        <div class="eyebrow">ALL MESSAGES</div>
+                        <h1>Inbox</h1>
+                        <p>Everything in one place. Nothing hidden.</p>
+                    </div>
+
+                    <div class="inbox-controls">
+                        <button class="secondary-button" id="clearFilters">
+                            Clear filters
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="filter-bar">
+
+                    <button class="filter-button active" data-filter="All">
+                        All
+                    </button>
+
+                    <button class="filter-button" data-filter="Unread">
+                        Unread
+                    </button>
+
+                    <button class="filter-button" data-filter="Important">
+                        Important
+                    </button>
+
+                    <button class="filter-button" data-filter="Needs Action">
+                        Needs Action
+                    </button>
+
+                    <button class="filter-button" data-filter="College">
+                        College
+                    </button>
+
+                    <button class="filter-button" data-filter="Work">
+                        Work
+                    </button>
+
+                    <button class="filter-button" data-filter="Personal">
+                        Personal
+                    </button>
+
+                    <button class="filter-button" data-filter="Finance">
+                        Finance
+                    </button>
+
+                    <button class="filter-button" data-filter="Promotions">
+                        Promotions
+                    </button>
+
+                </div>
+
+
+                <div class="inbox-table-wrapper">
+
+                    <div class="inbox-table-header">
+                        <span id="inboxResultCount">10 messages</span>
+
+                        <span class="demo-label">
+                            Sample data
+                        </span>
+                    </div>
+
+                    <div id="inboxList" class="inbox-list"></div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <footer class="footer">
+            <div>
+                <strong>VEYRA</strong>
+                <span>New Era of Viewing and Managing Emails</span>
+            </div>
+
+            <div>
+                Demo prototype • Built for Hacktoberfest 2026
+            </div>
+        </footer>
+
+    </main>
+
+</div>
+
+
+<div id="emailModal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+
+    <article class="email-detail">
+
+        <button
+            id="closeEmail"
+            class="modal-close"
+            aria-label="Close email"
+        >
+            ×
+        </button>
+
+        <div class="email-detail-top">
+
+            <div class="sender-large">
+                <div id="detailAvatar" class="sender-avatar">A</div>
+
+                <div>
+                    <strong id="detailSender">Sender</strong>
+                    <span id="detailEmail">email@example.com</span>
+                </div>
+            </div>
+
+            <span id="detailDate" class="detail-date"></span>
+
+        </div>
+
+        <div class="detail-subject-row">
+            <h2 id="detailSubject">Subject</h2>
+            <button
+                id="detailImportant"
+                class="star-button"
+                aria-label="Toggle important"
+            >
+                ★
+            </button>
+        </div>
+
+        <div id="detailBody" class="original-email"></div>
+
+
+        <section class="ai-card">
+
+            <div class="ai-card-header">
+                <div class="ai-badge">
+                    <span>✦</span>
+                    VEYRA INTELLIGENCE
+                </div>
+
+                <span id="aiSource" class="ai-source">
+                    Local intelligence
+                </span>
+            </div>
+
+            <div class="ai-summary">
+                <span class="ai-label">SUMMARY</span>
+                <p id="aiSummary"></p>
+            </div>
+
+            <div class="ai-meta-grid">
+
+                <div>
+                    <span class="ai-label">CATEGORY</span>
+                    <strong id="aiCategory"></strong>
+                </div>
+
+                <div>
+                    <span class="ai-label">PRIORITY</span>
+                    <strong id="aiPriority"></strong>
+                </div>
+
+                <div>
+                    <span class="ai-label">ACTION REQUIRED</span>
+                    <strong id="aiAction"></strong>
+                </div>
+
+                <div>
+                    <span class="ai-label">DEADLINE</span>
+                    <strong id="aiDeadline"></strong>
+                </div>
+
+            </div>
+
+            <div class="suggested-action">
+                <span class="ai-label">SUGGESTED ACTION</span>
+                <p id="aiSuggestedAction"></p>
+            </div>
+
+        </section>
+
+
+        <div class="detail-actions">
+
+            <button id="markReadButton" class="secondary-button">
+                ✓ Mark as read
+            </button>
+
+            <button id="markImportantButton" class="secondary-button">
+                ★ Important
+            </button>
+
+            <button id="addTaskButton" class="primary-button">
+                + Add to tasks
+            </button>
+
+            <button id="archiveButton" class="icon-text-button">
+                Archive
+            </button>
+
+        </div>
+
+    </article>
+</div>
+
+
+<div id="toastContainer" class="toast-container"></div>
+
+
+<div id="infoModal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+
+    <article class="small-modal">
+
+        <button
+            id="closeInfo"
+            class="modal-close"
+            aria-label="Close information"
+        >
+            ×
+        </button>
+
+        <div class="info-icon">⌾</div>
+
+        <span class="eyebrow">PRIVACY & SECURITY</span>
+
+        <h2>Designed with safe defaults.</h2>
+
+        <p>
+            This Hacktoberfest prototype uses sample emails only.
+            VEYRA does not ask for, store or transmit Gmail or Outlook
+            passwords.
+        </p>
+
+        <ul class="security-list">
+            <li>API keys stay on the server.</li>
+            <li>No real email credentials are stored.</li>
+            <li>Demo data is clearly separated from future integrations.</li>
+            <li>Real OAuth is planned for a future phase.</li>
+        </ul>
+
+        <button id="closeInfoButton" class="primary-button full">
+            Got it
+        </button>
+
+    </article>
+</div>
+
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>
